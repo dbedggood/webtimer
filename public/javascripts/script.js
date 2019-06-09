@@ -43,17 +43,20 @@ function remainingTime() {
         const minutes = Math.floor((remainder % (1000 * 60 * 60)) / (1000 * 60))
         const seconds = Math.floor((remainder % (1000 * 60)) / 1000)
 
-        document.getElementById('timeRemaining').innerHTML =
-            'Time remaining: ' +
+        const timeLeft =
             (hours < 10 ? '0' + hours : hours) +
             ':' +
             (minutes < 10 ? '0' + minutes : minutes) +
             ':' +
             (seconds < 10 ? '0' + seconds : seconds)
 
+        document.getElementById('timeRemaining').innerHTML = 'Time remaining: ' + timeLeft
+        document.title = timeLeft
+
         if (remainder < 0) {
             clearInterval(timer)
             document.getElementById('timeRemaining').innerHTML = '00:00:00'
+            document.title = '00:00:00'
         }
     }, 1000)
 }
