@@ -58,7 +58,7 @@ function remainingTime() {
             document.getElementById('timeRemaining').innerHTML = '00:00:00'
             document.title = '00:00:00'
         }
-    }, 1000)
+    }, 200)
 }
 
 window.onload = function() {
