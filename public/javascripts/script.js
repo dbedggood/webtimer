@@ -1,3 +1,1 @@
-function startTimer(m) {
-    alert(m)
-}
+setTimeout(() => alert(time), 1000)
