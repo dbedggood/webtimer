@@ -30,32 +30,8 @@ router.get(/^\/(\d+h)?(\d+m)?$/, function(req, res, next) {
         hours += q
     }
 
-    if (minutes == 0) {
-        if (hours == 1) {
-            output = hours + ' hour.'
-        } else {
-            output = hours + ' hours.'
-        }
-    } else if (hours == 0) {
-        if (minutes == 1) {
-            output = minutes + ' minute.'
-        } else {
-            output = minutes + ' minutes.'
-        }
-    } else {
-        if (hours == 1) {
-            output = hours + ' hour and '
-        } else {
-            output = hours + ' hours and '
-        }
-        if (minutes == 1) {
-            output += minutes + ' minute.'
-        } else {
-            output += minutes + ' minutes.'
-        }
-    }
+    res.render('index', { h: hours, m: minutes })
 
-    res.render('index', { message: 'Timer set for ' + output })
 })
 
 module.exports = router
