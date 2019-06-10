@@ -97,7 +97,7 @@ function remainingTime() {
 
         if (remainder < 0) {
             clearInterval(timer)
-            document.getElementById('timeRemaining').innerHTML = '00:00:00'
+            document.getElementById('timeRemaining').innerHTML = 'Time remaining: 00:00:00'
             document.title = '00:00:00'
         }
     }, 200)
