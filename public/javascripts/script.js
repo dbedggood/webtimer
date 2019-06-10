@@ -114,12 +114,12 @@ function remainingTime() {
 function flashTab() {
     const flash = setInterval(function() {
         if (document.title == '00:00:00') {
-            document.title = 'webtimer.link'
+            document.title = 'start.webtimer.link'
         } else {
             document.title = '00:00:00'
         }
         if (document.hasFocus()) {
-            document.title = 'webtimer.link'
+            document.title = 'start.webtimer.link'
             clearInterval(flash)
         }
     } , 500)
