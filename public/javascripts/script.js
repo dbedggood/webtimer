@@ -103,11 +103,27 @@ function remainingTime() {
         if (remainder < 0) {
             clearInterval(timer)
             document.getElementById('timeRemaining').innerHTML = 'Time remaining: 00:00:00'
-            document.title = '00:00:00'
             const ding = document.getElementById('ding')
             ding.play()
+            document.title = '00:00:00'
+            flashTab()
         }
     }, 200)
+}
+
+function flashTab() {
+    const flash = setInterval(function() {
+        if (document.title == '00:00:00') {
+            document.title = 'webtimer.link'
+        } else {
+            document.title = '00:00:00'
+        }
+        if (document.hasFocus()) {
+            document.title = 'webtimer.link'
+            clearInterval(flash)
+        }
+    } , 500)
+
 }
 
 window.onload = function() {
