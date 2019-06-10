@@ -76,6 +76,9 @@ function timerSetMessage() {
 function remainingTime() {
     let time = new Date()
     time = new Date(time.getTime() + (s + (m + h * 60) * 60) * 1000)
+    const ding = document.getElementById('ding')
+    ding.load()
+    
     if (time - new Date().getTime() > 1000 * 60 * 60 * 100) {
         document.getElementById('setMessage').innerHTML = 'Timer cannot be set for longer than 100 hours.'
         document.title = '99:59:59'
@@ -103,7 +106,6 @@ function remainingTime() {
         if (remainder < 0) {
             clearInterval(timer)
             document.getElementById('timeRemaining').innerHTML = 'Time remaining: 00:00:00'
-            const ding = document.getElementById('ding')
             ding.play()
             document.title = '00:00:00'
             flashTab()
