@@ -129,6 +129,8 @@ function flashTab() {
 }
 
 window.onload = function() {
-    timerSetMessage()
-    remainingTime()
+    if (h+m+s > 0) {
+        timerSetMessage()
+        remainingTime()
+    }
 }
