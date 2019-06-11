@@ -12,11 +12,7 @@ function timerSetMessage() {
     // for each element, format the value and unit as a string and push to messageArray
     for (const [unit, value] of timeArray) {
         if (value > 0) {
-            if (value == 1) {
-                messageArray.push(value + ' ' + unit)
-            } else {
-                messageArray.push(value + ' ' + unit + 's')
-            }
+            messageArray.push(value + ' ' + (value == 1 ? unit : unit + 's'))
         }
     }
 
