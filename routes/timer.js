@@ -8,18 +8,21 @@ router.get(/^\/(\d+h)?(\d+m)?(\d+s)?$/, function(req, res, next) {
     const time = req.path.slice(1)
 
     // find which units of time were inputted
-    const indexArray = [time.indexOf('h'), time.indexOf('m'), time.indexOf('s')]
+    const unitIndexArray = [time.indexOf('h'), time.indexOf('m'), time.indexOf('s')]
     
     // array of duration by unit, i.e. [h, m, s]
     let timeArray = [0, 0, 0]
 
     let previousIndex = 0
-    for (let i = 0; i < indexArray.length; i++) {
+    for (let i = 0; i < unitIndexArray.length; i++) {
         // update the timeArray index with the duration of the time unit entered
-        if (indexArray[i] >= 0) {
-            timeArray[i] = parseInt(time.slice(previousIndex, indexArray[i]))
-            previousIndex = indexArray[i] + 1
+        if (unitIndexArray[i] >= 0) {
+            timeArray[i] = parseInt(time.slice(previousIndex, unitIndexArray[i]))
+            previousIndex = unitIndexArray[i] + 1
         }
+    }
+
+    for (let i = timeArray.length; i > 0; i--) {
         // change minutes and seconds into hours and minutes respectively if > 60
         if (i > 0) {
             let q = (timeArray[i]/60) | 0
@@ -27,7 +30,7 @@ router.get(/^\/(\d+h)?(\d+m)?(\d+s)?$/, function(req, res, next) {
             timeArray[i - 1] += q
         }
     }
-
+    
     // render index page with time variables 
     res.render('index', { h: timeArray[0], m: timeArray[1], s: timeArray[2] })
 
