@@ -1,74 +1,27 @@
+// set the message displayed when a timer is set
 function timerSetMessage() {
-    let message = ''
+    
+    const timeArray = [
+        ['hour', h],
+        ['minute', m],
+        ['second', s]
+    ]
 
-    if (m == 0 && s == 0) {
-        if (h == 1) {
-            message = h + ' hour.'
-        } else {
-            message = h + ' hours.'
-        }
-    } else if (h == 0 && s == 0) {
-        if (m == 1) {
-            message = m + ' minute.'
-        } else {
-            message = m + ' minutes.'
-        }
-    } else if (h == 0 && m == 0) {
-        if (s == 1) {
-            message = s + ' second.'
-        } else {
-            message = s + ' seconds.'
-        }
-    } else if (s == 0) {
-        if (h == 1) {
-            message = h + ' hour and '
-        } else {
-            message = h + ' hours and '
-        }
-        if (m == 1) {
-            message += m + ' minute.'
-        } else {
-            message += m + ' minutes.'
-        }
-    } else if (m == 0) {
-        if (h == 1) {
-            message = h + ' hour and '
-        } else {
-            message = h + ' hours and '
-        }
-        if (s == 1) {
-            message += s + ' second.'
-        } else {
-            message += s + ' seconds.'
-        }
-    } else if (h == 0) {
-        if (m == 1) {
-            message = m + ' minute and '
-        } else {
-            message = m + ' minutes and '
-        }
-        if (s == 1) {
-            message += s + ' second.'
-        } else {
-            message += s + ' seconds.'
-        }
-    } else {
-        if (h == 1) {
-            message = h + ' hour, '
-        } else {
-            message = h + ' hours, '
-        }
-        if (m == 1) {
-            message += m + ' minute and '
-        } else {
-            message += m + ' minutes and '
-        }
-        if (s == 1) {
-            message += s + ' second.'
-        } else {
-            message += s + ' seconds.'
+    let messageArray = []
+
+    // for each element, format the value and unit as a string and push to messageArray
+    for (const [unit, value] of timeArray) {
+        if (value > 0) {
+            if (value == 1) {
+                messageArray.push(value + ' ' + unit)
+            } else {
+                messageArray.push(value + ' ' + unit + 's')
+            }
         }
     }
+
+    // join messageArray elements together to form a comprehensible sentence
+    const message = messageArray.slice(0, -1).join(', ') + ' and ' + messageArray.slice(-1) + '.'
 
     document.getElementById('setMessage').innerHTML = 'Timer set for ' + message
 }
