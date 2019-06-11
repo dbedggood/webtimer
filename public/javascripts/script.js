@@ -26,26 +26,30 @@ function timerSetMessage() {
     document.getElementById('setMessage').innerHTML = 'Timer set for ' + message
 }
 
+// calculate the time left on the timer and display on screen
 function remainingTime() {
-    let time = new Date()
-    time = new Date(time.getTime() + (s + (m + h * 60) * 60) * 1000)
-    const ding = document.getElementById('ding')
-    ding.load()
+    // get the dates that the timer begins and ends at
+    let timerBegin = new Date()
+    timerEnd = new Date(timerBegin.getTime() + (s + (m + (h * 60)) * 60) * 1000)
     
-    if (time - new Date().getTime() > 1000 * 60 * 60 * 100) {
+    // display a warning if the user enters a duration over 100 hours
+    if (timerEnd - timerBegin > 360000000) {
         document.getElementById('setMessage').innerHTML = 'Timer cannot be set for longer than 100 hours.'
         document.title = '99:59:59'
         return
     }
 
+    // render timer countdown (every 200ms because 1000ms is a bit laggy)
     const timer = setInterval(function() {
-        const now = new Date().getTime()
-        const remainder = time - now
+        // calculate time left
+        const remainder = timerEnd - new Date().getTime()
 
-        const hours = Math.floor((remainder % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60))
-        const minutes = Math.floor((remainder % (1000 * 60 * 60)) / (1000 * 60))
-        const seconds = Math.floor((remainder % (1000 * 60)) / 1000)
+        // split remainder time into hours, minutes and seconds
+        const hours = (remainder / 3600000) | 0
+        const minutes = ((remainder % 3600000) / 60000) | 0
+        const seconds = ((remainder % 60000) / 1000) | 0
 
+        // format countdown timer
         const timeLeft =
             (hours < 10 ? '0' + hours : hours) +
             ':' +
@@ -53,14 +57,19 @@ function remainingTime() {
             ':' +
             (seconds < 10 ? '0' + seconds : seconds)
 
+        // render countdown on page and in website title
         document.getElementById('timeRemaining').innerHTML = 'Time remaining: ' + timeLeft
         document.title = timeLeft
 
+        // if the timer has finished, stop updating it
         if (remainder < 0) {
             clearInterval(timer)
             document.getElementById('timeRemaining').innerHTML = 'Time remaining: 00:00:00'
+            // play a sound to grab the user's attention
+            const ding = document.getElementById('ding')
             ding.play()
             document.title = '00:00:00'
+            // also flash the browser tab to grab the user's attention
             flashTab()
         }
     }, 200)
@@ -68,20 +77,25 @@ function remainingTime() {
 
 function flashTab() {
     const flash = setInterval(function() {
-        if (document.title == '00:00:00') {
-            document.title = 'start.webtimer.link'
-        } else {
-            document.title = '00:00:00'
-        }
+        
+        // set two titles to switch between
+        const titles = ['start.webtimer.link', '00:00:00']
+
+        // if the user is looking at the tab, stop flashing
         if (document.hasFocus()) {
-            document.title = 'start.webtimer.link'
+            document.title = titles[0]
             clearInterval(flash)
+        // otherwise, alternate the title message
+        } else {
+            document.title = document.title == titles[0] ? titles[1] : titles[0]
         }
+        
     } , 500)
 
 }
 
 window.onload = function() {
+    // only activate timer functions if a duration is actually set
     if (h+m+s > 0) {
         timerSetMessage()
         remainingTime()
