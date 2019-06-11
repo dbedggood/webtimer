@@ -3,62 +3,33 @@ var router = express.Router()
 
 /* GET timer page. */
 router.get(/^\/(\d+h)?(\d+m)?(\d+s)?$/, function(req, res, next) {
+
+    // get the path from the url
     const time = req.path.slice(1)
-    let hours = ''
-    let minutes = ''
-    let seconds = ''
 
-    const hIndex = time.indexOf('h')
-    const mIndex = time.indexOf('m')
-    const sIndex = time.indexOf('s')
+    // find which units of time were inputted
+    const indexArray = [time.indexOf('h'), time.indexOf('m'), time.indexOf('s')]
+    
+    // array of duration by unit, i.e. [h, m, s]
+    let timeArray = [0, 0, 0]
 
-    if (hIndex < 0 && mIndex > 0 && sIndex > 0) {
-        hours = '0'
-        minutes = time.slice(0, mIndex)
-        seconds = time.slice(mIndex + 1, sIndex)
-    } else if (mIndex < 0 && hIndex > 0 && sIndex > 0) {
-        hours = time.slice(0, hIndex)
-        minutes = '0'
-        seconds = time.slice(hIndex + 1, sIndex)
-    } else if (sIndex < 0 && hIndex > 0 && mIndex > 0) {
-        hours = time.slice(0, hIndex)
-        minutes = time.slice(hIndex + 1, mIndex)
-        seconds = '0'
-    } else if (hIndex > 0 && mIndex < 0 && sIndex < 0) {
-        hours = time.slice(0, hIndex)
-        minutes = '0'
-        seconds = '0'
-    } else if (mIndex > 0 && hIndex < 0 && sIndex < 0) {
-        hours = '0'
-        minutes = time.slice(0, mIndex)
-        seconds = '0'
-    } else if (sIndex > 0 && hIndex < 0 && mIndex < 0) {
-        hours = '0'
-        minutes = '0'
-        seconds = time.slice(0, sIndex)
-    } else {
-        hours = time.slice(0, hIndex)
-        minutes = time.slice(hIndex + 1, mIndex)
-        seconds = time.slice(mIndex + 1, sIndex)
+    let previousIndex = 0
+    for (let i = 0; i < indexArray.length; i++) {
+        // update the timeArray index with the duration of the time unit entered
+        if (indexArray[i] >= 0) {
+            timeArray[i] = parseInt(time.slice(previousIndex, indexArray[i]))
+            previousIndex = indexArray[i] + 1
+        }
+        // change minutes and seconds into hours and minutes respectively if > 60
+        if (i > 0) {
+            let q = (timeArray[i]/60) | 0
+            timeArray[i] = timeArray[i] % 60
+            timeArray[i - 1] += q
+        }
     }
 
-    minutes = parseInt(minutes)
-    hours = parseInt(hours)
-    seconds = parseInt(seconds)
-
-    if (seconds >= 60) {
-        let q = Math.floor(seconds / 60)
-        seconds = seconds % 60
-        minutes += q
-    }
-
-    if (minutes >= 60) {
-        let q = Math.floor(minutes / 60)
-        minutes = minutes % 60
-        hours += q
-    }
-
-    res.render('index', { h: hours, m: minutes, s: seconds })
+    // render index page with time variables 
+    res.render('index', { h: timeArray[0], m: timeArray[1], s: timeArray[2] })
 
 })
 
