@@ -16,8 +16,13 @@ function timerSetMessage() {
         }
     }
 
+    let message = ''
     // join messageArray elements together to form a comprehensible sentence
-    const message = messageArray.slice(0, -1).join(', ') + ' and ' + messageArray.slice(-1) + '.'
+    if (messageArray[0] == messageArray.slice(-1)) {
+        message = messageArray[0] + '.'
+    } else {
+        message = messageArray.slice(0, -1).join(', ') + ' and ' + messageArray.slice(-1) + '.'
+    }
 
     document.getElementById('timer').innerHTML = 'Timer set for ' + message
 }
