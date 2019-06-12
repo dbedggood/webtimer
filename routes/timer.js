@@ -31,8 +31,8 @@ router.get(/^\/(\d+h)?(\d+m)?(\d+s)?$/, function(req, res, next) {
         }
     }
     
-    // render index page with time variables 
-    res.render('index', { h: timeArray[0], m: timeArray[1], s: timeArray[2] })
+    // render timer page with time variables 
+    res.render('timer', { h: timeArray[0], m: timeArray[1], s: timeArray[2] })
 
 })
 

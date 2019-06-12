@@ -30,6 +30,8 @@ function timerSetMessage() {
 // calculate the time left on the timer and display on screen
 function remainingTime() {
     document.getElementById('startTimer').innerHTML = 'Reset Timer'
+    document.getElementById('timer').innerHTML = ''
+    document.getElementById('timer').style.fontSize = '6rem'
     // get the dates that the timer begins and ends at
     let timerBegin = new Date()
     timerEnd = new Date(timerBegin.getTime() + (s + (m + (h * 60)) * 60) * 1000)
