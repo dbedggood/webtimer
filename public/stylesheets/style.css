@@ -40,7 +40,12 @@ body {
 }
 
 .masthead-brand {
+  float: left;
   margin-bottom: 0;
+}
+
+.nav-masthead {
+  float: right;
 }
 
 .nav-masthead .nav-link {
@@ -63,15 +68,6 @@ body {
 .nav-masthead .active {
   color: #fff;
   border-bottom-color: #fff;
-}
-
-@media (min-width: 48em) {
-  .masthead-brand {
-    float: left;
-  }
-  .nav-masthead {
-    float: right;
-  }
 }
 
 .cover {
