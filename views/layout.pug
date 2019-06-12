@@ -1,16 +1,21 @@
 doctype html
 html
   head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
     title start.webtimer.link
-    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css")
+
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel="apple-touch-icon", sizes="180x180", href="/apple-touch-icon.png")
-    link(rel="icon", type="image/png", sizes="32x32", href="/favicon-32x32.png")
-    link(rel="icon", type="image/png", sizes="16x16", href="/favicon-16x16.png")
-    link(rel="manifest", href="/site.webmanifest")
-    link(rel="mask-icon", href="/safari-pinned-tab.svg", color="#5bbad5")
-    meta(name="msapplication-TileColor", content="#2b5797")
-    meta(name="theme-color", content="#ffffff")
+
+    link(rel="apple-touch-icon", sizes="180x180", href='/apple-touch-icon.png')
+    link(rel='icon', type='image/png', sizes='32x32', href='/favicon-32x32.png')
+    link(rel='icon', type='image/png', sizes='16x16', href='/favicon-16x16.png')
+    link(rel='manifest', href='/site.webmanifest')
+    link(rel='mask-icon', href='/safari-pinned-tab.svg', color='#5bbad5')
+    meta(name='msapplication-TileColor', content='#2b5797')
+    meta(name='theme-color', content='#ffffff')
+
     script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-141782109-1')
     script.
       window.dataLayer = window.dataLayer || [];
@@ -21,10 +26,31 @@ html
       const h = #{h}
       const m = #{m}
       const s = #{s}
-    script(src="/javascripts/script.js")
+    script(src='/javascripts/script.js')
 
   body
     audio#ding
-      source(src="/audio/timerEndTone.ogg" type="audio/ogg")
-      source(src="/audio/timerEndTone.mp3" type="audio/mpeg")
-    block content
+      source(src='/audio/timerEndTone.ogg' type='audio/ogg')
+      source(src='/audio/timerEndTone.mp3' type='audio/mpeg')
+
+    .cover-container.d-flex.h-100.p-3.mx-auto.flex-column
+
+      header.masthead.mb-auto
+        .inner
+          h3.masthead-brand 
+            button#startTimer.btn.btn-outline-light(onclick='remainingTime()') Start Timer
+          nav.nav.nav-masthead.justify-content-center
+            a.nav-link.active(href='#') Home
+            a.nav-link(href='#') Settings
+            a.nav-link(href='#') About
+      
+      main.inner.cover(role='main')
+        block content
+      
+      footer.mastfoot.mt-auto
+        .inner
+          p
+            | Created by 
+            a(href='https://github.com/dbedggood') Daniel Bedggood 
+            | in 2019.
+    

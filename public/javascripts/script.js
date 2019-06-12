@@ -19,18 +19,19 @@ function timerSetMessage() {
     // join messageArray elements together to form a comprehensible sentence
     const message = messageArray.slice(0, -1).join(', ') + ' and ' + messageArray.slice(-1) + '.'
 
-    document.getElementById('setMessage').innerHTML = 'Timer set for ' + message
+    document.getElementById('timer').innerHTML = 'Timer set for ' + message
 }
 
 // calculate the time left on the timer and display on screen
 function remainingTime() {
+    document.getElementById('startTimer').innerHTML = 'Reset Timer'
     // get the dates that the timer begins and ends at
     let timerBegin = new Date()
     timerEnd = new Date(timerBegin.getTime() + (s + (m + (h * 60)) * 60) * 1000)
     
     // display a warning if the user enters a duration over 100 hours
     if (timerEnd - timerBegin > 360000000) {
-        document.getElementById('setMessage').innerHTML = 'Timer cannot be set for longer than 100 hours.'
+        document.getElementById('timer').innerHTML = 'Timer cannot be set for longer than 100 hours.'
         document.title = '99:59:59'
         return
     }
@@ -54,13 +55,13 @@ function remainingTime() {
             (seconds < 10 ? '0' + seconds : seconds)
 
         // render countdown on page and in website title
-        document.getElementById('timeRemaining').innerHTML = 'Time remaining: ' + timeLeft
+        document.getElementById('timer').innerHTML = timeLeft
         document.title = timeLeft
 
         // if the timer has finished, stop updating it
         if (remainder < 0) {
             clearInterval(timer)
-            document.getElementById('timeRemaining').innerHTML = 'Time remaining: 00:00:00'
+            document.getElementById('timer').innerHTML = '00:00:00'
             // play a sound to grab the user's attention
             const ding = document.getElementById('ding')
             ding.play()
@@ -94,6 +95,5 @@ window.onload = function() {
     // only activate timer functions if a duration is actually set
     if (h+m+s > 0) {
         timerSetMessage()
-        remainingTime()
     }
 }
