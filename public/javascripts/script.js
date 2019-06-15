@@ -32,8 +32,7 @@ function remainingTime() {
 
     document.getElementById('startTimer').innerHTML = 'Reset Timer'
     document.getElementById('timer').innerHTML = ''
-    document.getElementById('timer').style.fontSize = '20vw'
-    document.getElementById('timer').style.fontFamily = '\'Roboto Mono\', monospace'
+    document.getElementById('timer').className = 'timer'
 
     // get the dates that the timer begins and ends at
     let timerBegin = new Date()

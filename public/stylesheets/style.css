@@ -76,11 +76,16 @@ body {
 }
 
 .cover-heading {
-  font-size: 5rem;
+  font-size: 4rem;
+}
+
+.timer {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-size: 20vw;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .mastfoot {
