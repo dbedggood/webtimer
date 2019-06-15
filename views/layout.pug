@@ -33,10 +33,9 @@ html
       source(src='/audio/timerEndTone.ogg' type='audio/ogg')
       source(src='/audio/timerEndTone.mp3' type='audio/mpeg')
 
-    .cover-container.d-flex.h-100.p-3.mx-auto.flex-column
+    .cover-container.d-flex.flex-column.h-100.p-3
 
       header.masthead.mb-auto
-        .inner
           h3.masthead-brand 
             button#startTimer.btn.btn-outline-light(onclick='remainingTime()') Start Timer
           nav.nav.nav-masthead
@@ -44,11 +43,10 @@ html
             a.nav-link(href='#') Settings
             a.nav-link(href='#') About
       
-      main.inner.cover(role='main')
+      main.cover
         block content
       
       footer.mastfoot.mt-auto
-        .inner
           p
             | Created by 
             a(href='https://github.com/dbedggood') Daniel Bedggood 
