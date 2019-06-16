@@ -16,6 +16,7 @@ app.set('view engine', 'pug')
 
 // security
 app.use(helmet())
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }))
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
@@ -36,6 +37,12 @@ app.use(
         }
     })
 )
+app.use(helmet.featurePolicy({
+    features: {
+      fullscreen: ["'self'"],
+      speaker: ["'self'"]
+    }
+  }))
 
 app.use(logger('dev'))
 app.use(express.json())
