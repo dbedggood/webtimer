@@ -71,32 +71,52 @@ function remainingTime() {
         if (remainder < 0) {
             clearInterval(timer)
             document.getElementById('timer').innerHTML = '00:00:00'
-            // play a sound to grab the user's attention
-            const ding = document.getElementById('ding')
-            ding.play()
             document.title = '00:00:00'
             // also flash the browser tab to grab the user's attention
-            flashTab()
+            timerEndBehaviour()
         }
     }, 200)
 }
 
-function flashTab() {
-    const flash = setInterval(function() {
-        
-        // set two titles to switch between
-        const titles = ['start.webtimer.link', '00:00:00']
+function timerEndBehaviour() {
+    let active = false
+    function userIsActive() {
+        active = true
+    }
+    // if the mouse moves the user is active
+    document.addEventListener("mousemove", userIsActive)
+    let ding = document.getElementById('ding')
+    // play audio every 8 times the browser tab flashes
+    let gap = 0
+    // initial volume, increases over time
+    let increasingVolume = 0.1
+    // set two titles to switch between
+    const titles = ['start.webtimer.link', '00:00:00']
 
-        // if the user is looking at the tab, stop flashing
-        if (document.hasFocus()) {
+    const alertUser = setInterval(function() {
+
+        // stop if the tab is focused and the user is active
+        if (document.hasFocus() && active) {
             document.title = titles[0]
-            clearInterval(flash)
-        // otherwise, alternate the title message
+            clearInterval(alertUser)
+            document.removeEventListener("mousemove", userIsActive)
         } else {
+            // flash the title
             document.title = document.title == titles[0] ? titles[1] : titles[0]
+            // play the sound and increase volume slightly
+            if (gap == 0) {
+                ding.volume = increasingVolume
+                ding.play()
+                // reset counter
+                gap = 8
+                if (increasingVolume < 0.9) {
+                    increasingVolume += 0.1
+                } 
+            }
+            gap -= 1
         }
-        
-    } , 500)
+
+    }, 500)
 
 }
 
