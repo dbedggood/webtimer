@@ -14,7 +14,29 @@ const app = express()
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
 
+// security
 app.use(helmet())
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: ["'self'"],
+            fontSrc: ["'self'", 'fonts.gstatic.com'],
+            imgSrc: ["'self'", 'www.google-analytics.com'],
+            styleSrc: [
+                "'self'",
+                'fonts.googleapis.com',
+                'cdnjs.cloudflare.com'
+            ],
+            scriptSrc: [
+                "'self'",
+                "'unsafe-inline'",
+                'www.google-analytics.com',
+                'www.googletagmanager.com'
+            ]
+        }
+    })
+)
+
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
