@@ -149,6 +149,7 @@ function checkUserIdle() {
 window.onload = function() {
     // only activate timer functions if a duration is actually set
     if (h + m + s > 0) {
+        document.getElementById("startTimer").disabled = false
         timerSetMessage()
     }
 }
