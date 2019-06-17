@@ -1,11 +1,6 @@
 // set the message displayed when a timer is set
 function timerSetMessage() {
-    
-    const timeArray = [
-        ['hour', h],
-        ['minute', m],
-        ['second', s]
-    ]
+    const timeArray = [['hour', h], ['minute', m], ['second', s]]
 
     let messageArray = []
 
@@ -21,7 +16,11 @@ function timerSetMessage() {
     if (messageArray[0] == messageArray.slice(-1)) {
         message = messageArray[0] + '.'
     } else {
-        message = messageArray.slice(0, -1).join(', ') + ' and ' + messageArray.slice(-1) + '.'
+        message =
+            messageArray.slice(0, -1).join(', ') +
+            ' and ' +
+            messageArray.slice(-1) +
+            '.'
     }
 
     document.getElementById('timer').innerHTML = 'Timer set for ' + message
@@ -29,18 +28,19 @@ function timerSetMessage() {
 
 // calculate the time left on the timer and display on screen
 function remainingTime() {
-
+    checkUserIdle()
     document.getElementById('startTimer').innerHTML = 'Reset Timer'
     document.getElementById('timer').innerHTML = ''
     document.getElementById('timer').className = 'timer'
 
     // get the dates that the timer begins and ends at
     let timerBegin = new Date()
-    timerEnd = new Date(timerBegin.getTime() + (s + (m + (h * 60)) * 60) * 1000)
-    
+    timerEnd = new Date(timerBegin.getTime() + (s + (m + h * 60) * 60) * 1000)
+
     // display a warning if the user enters a duration over 100 hours
     if (timerEnd - timerBegin > 360000000) {
-        document.getElementById('timer').innerHTML = 'Timer cannot be set for longer than 100 hours.'
+        document.getElementById('timer').innerHTML =
+            'Timer cannot be set for longer than 100 hours.'
         document.title = '99:59:59'
         return
     }
@@ -78,13 +78,10 @@ function remainingTime() {
     }, 200)
 }
 
+let userIsActive = false
+
 function timerEndBehaviour() {
-    let active = false
-    function userIsActive() {
-        active = true
-    }
-    // if the mouse moves the user is active
-    document.addEventListener("mousemove", userIsActive)
+    userIsActive = false
     let ding = document.getElementById('ding')
     // play audio every 8 times the browser tab flashes
     let gap = 0
@@ -94,12 +91,10 @@ function timerEndBehaviour() {
     const titles = ['start.webtimer.link', '00:00:00']
 
     const alertUser = setInterval(function() {
-
-        // stop if the tab is focused and the user is active
-        if (document.hasFocus() && active) {
+        // stop if the user is active
+        if (userIsActive) {
             document.title = titles[0]
             clearInterval(alertUser)
-            document.removeEventListener("mousemove", userIsActive)
         } else {
             // flash the title
             document.title = document.title == titles[0] ? titles[1] : titles[0]
@@ -111,18 +106,33 @@ function timerEndBehaviour() {
                 gap = 8
                 if (increasingVolume < 0.9) {
                     increasingVolume += 0.1
-                } 
+                }
             }
             gap -= 1
         }
-
     }, 500)
+}
 
+function checkUserIdle() {
+    let time
+    document.onmousemove = resetTimer
+    document.onmousedown = resetTimer
+    document.onkeypress = resetTimer
+
+    function hideUI() {
+        console.log('user is inactive: hiding the ui')
+    }
+
+    function resetTimer() {
+        userIsActive = true
+        clearTimeout(time)
+        time = setTimeout(hideUI, 3000)
+    }
 }
 
 window.onload = function() {
     // only activate timer functions if a duration is actually set
-    if (h+m+s > 0) {
+    if (h + m + s > 0) {
         timerSetMessage()
     }
 }
