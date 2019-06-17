@@ -119,16 +119,32 @@ function checkUserIdle() {
     document.onmousedown = resetTimer
     document.onkeypress = resetTimer
 
+    let masthead = document.querySelector('header')
+    let mastfoot = document.querySelector('footer')
+
+
     function hideUI() {
-        console.log('user is inactive: hiding the ui')
+        userIsActive = false
+        if (!masthead.classList.contains('fadeOutElement')) {
+            masthead.classList.add('fadeOutElement')
+            mastfoot.classList.add('fadeOutElement')
+        }
     }
 
     function resetTimer() {
-        userIsActive = true
         clearTimeout(time)
-        time = setTimeout(hideUI, 3000)
+        userIsActive = true
+        if (masthead.classList.contains('fadeOutElement')) {
+            masthead.classList.remove('fadeOutElement')
+            mastfoot.classList.remove('fadeOutElement')
+            masthead.classList.add('fadeInElement')
+            mastfoot.classList.add('fadeInElement')
+        }
+        time = setTimeout(hideUI, 5000)
     }
 }
+
+
 
 window.onload = function() {
     // only activate timer functions if a duration is actually set
