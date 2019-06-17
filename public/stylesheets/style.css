@@ -95,7 +95,7 @@ body {
 .fadeInElement {
   visibility: visible;
   opacity: 1;
-  transition: opacity 2s linear;
+  transition: opacity 1s linear;
 }
 
 .fadeOutElement {
