@@ -125,6 +125,7 @@ function checkUserIdle() {
 
     function hideUI() {
         userIsActive = false
+        document.body.style.cursor = 'none'
         if (!masthead.classList.contains('fadeOutElement')) {
             masthead.classList.add('fadeOutElement')
             mastfoot.classList.add('fadeOutElement')
@@ -134,6 +135,7 @@ function checkUserIdle() {
     function resetTimer() {
         clearTimeout(time)
         userIsActive = true
+        document.body.style.cursor = 'default'
         if (masthead.classList.contains('fadeOutElement')) {
             masthead.classList.remove('fadeOutElement')
             mastfoot.classList.remove('fadeOutElement')
