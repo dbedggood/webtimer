@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 
 /* GET timer page. */
+// The regex accepts a duration in the form __h__m__s where h comes after number of hours, m after minutes, and s after seconds
 router.get(/^\/(\d+h)?(\d+m)?(\d+s)?$/, function(req, res, next) {
 
     // get the path from the url
