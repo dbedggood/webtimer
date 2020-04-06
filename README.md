@@ -4,7 +4,7 @@ A minimalistic fullscreen browser-based timer.
 
 The timer is set by filling in the url path with the desired duration, allowing easy to bookmarking and sharing.
 
-Made with Express and the Pug template engine, hosted on Heroku.
+Made with Express and the Pug template engine, ~~hosted on Heroku.~~ **not hosted anywhere**
 
 ## Demo
 <img src="./demo.gif" alt="demo"/>
